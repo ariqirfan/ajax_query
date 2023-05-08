@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>tugas_ajax</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <table id="table" border="1px">
+  </table>
+
+  <script>
+$(document).ready(function(){
+
+$.ajax({
+    async: true,
+	crossDomain: true,
+	url: 'https://iata-and-icao-codes.p.rapidapi.com/airlines',
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '12ef6c6b45msh05984226db61cb3p11cc86jsnc4cd4c1a2074',
+		'X-RapidAPI-Host': 'iata-and-icao-codes.p.rapidapi.com'
+	},
+    dataType    : "json",
+    success     : function(data){
+        console.log(data)
+        showToTable(data)    
+    }
+})
+function showToTable(data){
+    let table="<tr><th>Kode</th> <th>Nama Maskapai</th> <th>Kode Bandara</th></tr>";
+        for (const i in data) {
+            table += "<tr><td>" + 
+                data[i]["iata_code"] + "</td><td>" + 
+                data[i]["name"] + "</td><td>" + 
+                data[i]["icao_code"] + "</td></tr>" 
+                }
+                document.getElementById("table").innerHTML = table;
+        } 
+    })
+  </script>
+
+</body>
+</html>
+
+<!-- $.ajax({
+    url: "http://ergast.com/api/f1/drivers.json?callback=myParser",
+    dataType: "jsonp",
+    success: function(data) {
+        console.log(data); // Data berhasil diambil dan ditampilkan di konsol
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown); // Menampilkan pesan kesalahan jika terjadi error
+    }
+}); -->
